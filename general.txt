@@ -1,0 +1,6 @@
+first we will run git commands to pull code from repository
+then we need to replace files inside templates. Let me show basic flow of how things work inside django.
+
+when you open - https://slack-apps.net/
+
+first it goes here to this page

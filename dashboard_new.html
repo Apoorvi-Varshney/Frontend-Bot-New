@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="../../../../dashboard/" class="list-group-item active">
+                Your Facebook Pages
+            </a>
+            {% for pages in fb_pages %}
+            <a id="{{pages.page_id}}"
+               href="../../../../dashboard/{{ pages.user_id.django_username }}/{{ pages.page_id }}"
+               class="list-group-item">{{ pages.page_name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-9">
+
+        {% if selected_page_object.enable_bot is not True %}
+
+        <div class="jumbotron center-div">
+            <h2>Do You Want To Enable Bot For This Page?</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <button name="enable-bot" value="{{selected_page_object.page_id}}" class="btn btn-success">Yes</button>
+            </form>
+        </div>
+
+        {% else %}
+        <div class="control-label ">
+            <ul class="pagination" id="pagination_dashboard">
+                <li class="active"><a href="#">Broadcast Messsage</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Create Flow</a></li>
+            </ul>
+        </div>
+        <div class="instruction-text">
+            Let's code...
+            <p>
+                1. Use bootstrap and show/hide div as we select option.
+            </p>
+            In this div, a select option will be there, selecting one will append that div
+            <div class="action-buttons">
+                <button id="text" type="button" class="btn btn-default">Text</button>
+                <button type="gallery" type="button" class="btn btn-default">Gallery</button>
+                <button type="button" class="btn btn-default">Image</button>
+                <button type="button" class="btn btn-default">List</button>
+            </div>
+        </div>
+        <hr/>
+        <div id="parent-div">
+        </div>
+        <button onclick="parser()">console.log it</button>
+        {% endif %}
+    </div>
+</div>
+<script>
+
+    var printf = function () {
+        var num = arguments.length;
+        var oStr = arguments[0];
+        for (var i = 1; i < num; i++) {
+            var pattern = "\\{" + (i - 1) + "\\}";
+            var re = new RegExp(pattern, "g");
+            oStr = oStr.replace(re, arguments[i]);
+        }
+        return oStr;
+    };
+
+    $(document).ready(function () {
+        var page_id = "#{{selected_page_id}}";
+        $(page_id).addClass('active');
+
+        //my code starts from here
+
+        var counter = 0;
+        var inputFormTrack = {};
+        var messageDom = `
+                                    <div id='messageDom-{0}'>
+                                    Message {1}
+                                    <div class='optionArea'>
+                                        <form class='form-horizontal'>
+                                            <div class='form-group'>
+                                                <label>Enter text</label>
+                                                <textarea class='form-control' rows='3'></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class='form-group'>
+                                        <button id='button{2}' type='button' class='btn btn-primary btn-lg btn-block'>Add Button</button>
+                                    </div>
+                                    <hr />
+                                </div>
+                                `;
+
+        var inputForm = `
+                            <form class=button-form>
+                                <input name='input-text' type='text' placeholder='Button Name' />
+                                <div class='form-group'>
+                                    <input id='rbutton{0}' name='input-form' type='radio'>
+                                    <input name='input-text' type='text' placeholder='Message ID' payload_type='postback' disabled>
+                                </div>
+                                <div class='form-group'>
+                                    <input id='rbutton{1}' name='input-form' type='radio'>
+                                    <input name='input-text' type='text' placeholder='Web URL' payload_type='web_url' disabled>
+                                </div>
+                                <div class='form-group'>
+                                    <input id='rbutton{2}' name='input-form' type='radio'>
+                                    <input name='input-text' type='checkbox' payload_type='share' disabled> Share
+
+                                </div>
+                                <hr />
+                            </div>
+            `
+
+
+        $('#text').click(function () {
+            counter++;
+            $('#parent-div').append(printf(messageDom, counter.toString(), (counter).toString(), (counter).toString()));
+        });
+
+        $('#parent-div').on('click', function (e) {
+            //console.log(e);
+            var fullDivId = e.target.id;
+            var divId = fullDivId.split('');
+            divId = divId[divId.length - 1];
+            var target = e.target.id.split('');
+            target.pop();
+            target = target.join('');
+
+            if (target === "button") {
+                if (inputFormTrack[fullDivId] === undefined) {
+                    inputFormTrack[fullDivId] = 0;
+                } else {
+                    inputFormTrack[fullDivId] = parseInt(inputFormTrack[fullDivId]) + 3;
+                }
+                var tmp = parseInt(inputFormTrack[fullDivId]);
+
+                $('#messageDom-' + divId + ' > .optionArea').append(printf(inputForm, (tmp).toString(), (tmp + 1).toString(), (tmp + 2).toString()));
+            }
+
+            //now working!
+            if (target === "rbutton") {
+                e.target.parentNode.childNodes[3].disabled = false;
+            }
+        });
+
+    });
+
+    var parser = function () {
+        var jsonObject = [];
+        var counter = 0;
+        $('#parent-div').children().each(function () {
+            //console.log($(this).find('textarea').val());
+            jsonObject.push({"message": {"text": $(this).find('textarea').val()}});
+
+            if ($(this).find('.button-form').length !== 0) {
+                jsonObject[counter]['message']['quick_replies'] = [];
+                $(this).find('.button-form').each(function (button_dom_key, button_dom_content) {
+                    var button_name = $(button_dom_content).find('input').val();
+                    //jsonObject.message[counter]["quick_replies"] = [];
+                    $(button_dom_content).children().each(function (key, value) {
+                        if ($($(value).children()[0]).is(':checked')) {
+                            //need to check payload_type attr
+                            var payload_type = $($(value).children()[1]).attr('payload_type');
+
+                            if (payload_type == "postback") {
+                                jsonObject[counter]['message']['quick_replies'].push({
+                                    "title": button_name,
+                                    "content_type": "text",
+                                    "payload": $($(value).children()[1]).val()
+                                });
+                            }
+                            if (payload_type == "web_url") {
+                                jsonObject[counter]['message']['quick_replies'].push({
+                                    "title": button_name,
+                                    "type": "web_url",
+                                    "url": $($(value).children()[1]).val()
+                                });
+                            }
+                            if (payload_type == "share") {
+                                jsonObject[counter]['message']['quick_replies'].push({"type": "element_share"})
+                            }
+                        }
+                    });
+                })
+            }
+            counter++;
+        });
+        console.log(JSON.stringify(jsonObject));
+    };
+    //my code ends here
+
+</script>
+
+
+{% endblock %}

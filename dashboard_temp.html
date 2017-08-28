@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="../../../../dashboard/" class="list-group-item active">
+                        Your Facebook Pages
+                    </a>
+                    {% for pages in fb_pages %}
+                        <a id="{{pages.page_id}}" href="../../../../dashboard/{{ pages.user_id.django_username }}/{{ pages.page_id }}" class="list-group-item">{{ pages.page_name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-8">
+
+                <ul class="pagination pagination-lg">
+                    <li><a href="#">Broadcast Messsage</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Create Flow</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <script>
+            //here i am giving you one hint.
+            //this is one more variable that I would pass from backend, all you need to do is to code jQuery function now.
+            $(document).ready(function(){
+                var page_id = "#{{selected_page_id}}";
+                $(page_id).addClass('active');
+            });
+            function convertJson(){
+                    //$('#broadcast_message_string').val(JSON.stringify($('#broadcast_message_string').val()));
+                    //console.log(JSON.stringify($('#broadcast_message_string').val()));
+                    $('#broadcast_form').submit();
+                }
+        </script>
+
+
+{% endblock %}

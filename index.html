@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="{% static 'LOGOS/favicon.ico' %}" type="image/x-icon" />
+        <title>Facebook Messenger Integration</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Dosis:200" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!--<link rel="stylesheet" href="css/dashboard_style.css">-->
+        <style type="text/css">
+            body {
+                /* Margin bottom by footer height */
+                margin-bottom: 60px;
+            }
+
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                /* Set the fixed height of the footer here */
+                height: 60px;
+                background-color: #f5f5f5;
+            }
+        </style>
+    </head>
+
+    <body background="{% static 'images/background.jpg' %}">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top">slack-apps.net</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                        <li class="hidden">
+                            <a class="page-scroll" href="#page-top"></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a class="page-scroll" href="../../../../dashboard/">Dashboard</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="../../../../settings/">Settings</a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="../../../../logout/">Logout {{user.username}}</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="page-scroll" href="../../../../login/">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+        <div class="container-fluid body-padding-div">
+            <div class="main-heading">
+                Create your own Messenger ChatBot within minutes.
+            </div>
+            <div class="second-heading">
+                No coding required!
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="third-heading">
+                        Our Products
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="product-heading">
+                                    <p>Auto-Broadcast Bot</p>
+                                    <div class="product-details">
+                                        <p>
+                                            Auto Broadcast lets you to send message to your all your customers and vans via facebook messanger.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5">
+                                <div class="product-heading">
+                                    <p>Messenger Newsletter Marketing</p>
+                                    <div class="product-details">
+                                        <p>
+                                            Messenger Botletter is a service that makes it efficient and simple for you to send newsletters to your customers and fans via FaceBook Messenger at your own scheduled time.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="beta-warning">
+                        *We are in Beta as of now. Only selected users can use our services.
+                    </div>
+        </div>
+
+        <script src="{% static 'js/jquery.js' %}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <!-- Scrolling Nav JavaScript -->
+        <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'js/scrolling-nav.js' %}"></script>
+        <!-- we do not need to check password -->
+    </body>
+
+</html>

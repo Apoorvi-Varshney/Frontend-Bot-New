@@ -1,0 +1,139 @@
+.body-padding-div{
+    padding-top:80px;
+}
+
+#box {
+
+    max-width: 340px;
+    margin: 40px auto;
+    position: relative;
+    top: 80px;
+    padding-bottom: 30px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 5px 50px rgba(0,0,0,0.4);
+}
+
+
+#top-center {
+
+    font-family: 'Spectral';
+    font-weight: 300;
+    text-align: center;
+    background-color: rgb(43,116,164);
+    margin:auto;
+    text-transform: uppercase;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    color : white;
+}
+
+#Login-Box {
+
+    background-color: white;
+    padding: 1px;
+    margin-top: 10px;
+    font-weight: 100;
+    font-size: 16px;
+}
+
+#Login-Box label {
+
+    padding: 1px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 2em;
+}
+
+
+#Login-Box input {
+
+    margin-bottom: 20px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: .9em;
+    width: auto;
+}
+
+#Login-Box button {
+
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor:pointer;
+    outline: thin;
+}
+
+#messenger {
+
+	margin: 30px;
+}
+
+#fb {
+
+	margin:15px;
+}
+#dashboard_fb {
+    background-color:white;
+    border-color: rgb(219, 210, 190);
+}
+
+.center-div{
+    text-align: center;
+}
+#highlight a:hover {
+    color: blue;
+}
+
+#highlight a:active {
+    color: blue;
+}
+
+.main-heading {
+    font-family: 'Dosis', sans-serif;
+    font-size: 65px;
+}
+
+.second-heading {
+    font-family: 'Dosis', sans-serif;
+    font-size: 50px;
+}
+
+.third-heading {
+    font-family: 'Dosis', sans-serif;
+    font-size: 45px;
+    text-align: center;
+}
+
+.product-heading {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 24px;
+}
+
+.product-details {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    text-align: justify;
+}
+
+.beta-warning {
+    padding-top: 40px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 32px;
+}
+
+#pagination_dashboard a{
+
+      margin-left: 3px;
+      -moz-border-radius: 8px / 8px;
+      -webkit-border-radius: 8px 8px;
+      border-radius: 16px / 16px;
+}
+
+.btn-group{
+       position:relative;
+       float: bottom;
+        margin-top: 5px;
+}
